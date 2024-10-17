@@ -9,11 +9,20 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-/[Aa]ssets/*
-/[Aa]ssets/Standard Assets/*
-!/[Aa]ssets/Standard Assets/
-!/[Aa]ssets/Standard Assets/_Scripts/
-!/[Aa]ssets/Standard Assets/_Scripts/**
+/[Aa]ssets/*/*/*/*/*/*/*/*/*/*/*/*/*.*
+/[Aa]ssets/*/*/*/*/*/*/*/*/*/*/*/*.*
+/[Aa]ssets/*/*/*/*/*/*/*/*/*/*/*.*
+/[Aa]ssets/*/*/*/*/*/*/*/*/*/*.*
+/[Aa]ssets/*/*/*/*/*/*/*/*/*.*
+/[Aa]ssets/*/*/*/*/*/*/*/*.*
+/[Aa]ssets/*/*/*/*/*/*/*.*
+/[Aa]ssets/*/*/*/*/*/*.*
+/[Aa]ssets/*/*/*/*/*.*
+/[Aa]ssets/*/*/*/*.*
+/[Aa]ssets/*/*/*.*
+/[Aa]ssets/*/*.*
+/[Aa]ssets/*.*
+!/[Aa]ssets/**/*.cs
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
