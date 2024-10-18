@@ -7,12 +7,14 @@ using System.Collections;
 
 
 
-
-    [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(AudioSource))]
 public class GhostManager : MonoBehaviour
 {
     public GameObject player;
-    public static float leftTime = 12.0f;//귀신 접근하는 시간 밸런스 편하게 조정할 수 있게 변수 새로 만들었습니다.
+
+    private const float HauntingAudio_MaxPlayTime = 13.0f;
+    public static float leftTime = HauntingAudio_MaxPlayTime;
+
     public float ghost_timer;
     RawImage blackout_img;
     public bool _caught = false;
@@ -32,7 +34,11 @@ public class GhostManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        delay_time = Random.Range(3.0f, 5.0f);//시작시 3~7초의 랜덤 딜레이시간(귀신에게 쫓기기 전까지의 시간)
+        Reset_DelayTime();//시작시 3~7초의 랜덤 딜레이시간(귀신에게 쫓기기 전까지의 시간)
+#if DEBUG
+        delay_time = 180.0f;
+#endif
+
         blackout_img = blackout.GetComponent<RawImage>();
         ghost_timer = leftTime;
 
@@ -60,7 +66,11 @@ public class GhostManager : MonoBehaviour
                     if (GhostAudio.isPlaying == false)//만약 소리가 재생중이지 않다면 쫓기는 소리 시작
                     {
                         GhostAudio.clip = _hauntingSound;//쫓기는 사운드로 클립을 바꾸고
-                        GhostAudio.time = 12.0f - leftTime;
+                        GhostAudio.time = HauntingAudio_MaxPlayTime - leftTime;//사운드의 시작 시점을 HauntingAudio_MaxPlayTime에서 빼준다.
+                        if(GhostAudio.time < 0.0f)
+                        {
+                            GhostAudio.time = 0.0f;
+                        }
                         GhostAudio.Play();//실행
                     }
                    // textForTest.GetComponent<Text>().text = "It's Coming";//쫓기기 시작함 테스트용 텍스트
@@ -71,7 +81,12 @@ public class GhostManager : MonoBehaviour
                     else//만약 쫓기는 타이머가 끝나면
                     {
                         ghost_timer = leftTime;//타이머 리셋
-                        delay_time = Random.Range(3.0f, 5.0f);//타이머리셋
+                        Reset_DelayTime();//타이머리셋
+
+#if DEBUG
+                        delay_time = 180.0f;
+#endif
+
                         _caught = true;//잡힙 상태로 바꿈
                     }
                 }
@@ -81,9 +96,8 @@ public class GhostManager : MonoBehaviour
                 GetComponent<AudioSource>().Stop();
                // textForTest.GetComponent<Text>().text = "Safe";
                 ghost_timer = leftTime;
-                delay_time = Random.Range(3.0f, 5.0f);//모두리셋
+                Reset_DelayTime();//모두리셋
             }
-
         }
 
         else if (_caught == true)//만약 잡히면
@@ -187,7 +201,16 @@ public class GhostManager : MonoBehaviour
             }
 
 
-            delay_time = Random.Range(3.0f, 5.0f);
+            Reset_DelayTime();
         }
+    }
+
+    private void Reset_DelayTime()
+    {
+#if DEBUG
+        delay_time = 180.0f;
+#else
+        delay_time = Random.Range(3.0f, 5.0f);
+#endif
     }
 }

@@ -79,6 +79,13 @@ public class PlayerInteract : MonoBehaviour
 
                     if (doorScript == null) return;
 
+                    //문이 열려있을 경우에는 제약 없이 닫을 수 있음.
+                    if (doorScript.open)
+                    {
+                        doorScript.ChangeDoorState();
+                        return;
+                    }
+
                     if (Inventory.keys[doorScript.index] == true)
                     {
                         Psfx.PlayOneShot(ULdoor_sfx);
